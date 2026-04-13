@@ -1,0 +1,272 @@
+/**
+ * global.css — Inflação Pessoal · Mobile
+ *
+ * Formato: NativeWind v5 @theme
+ * Fonte de verdade: docs/specs/design-tokens.md
+ * Sincronizado com: components/design-tokens.ts + app/globals.css
+ *
+ * Como usar:
+ *   import "./global.css"; // no entry point do app (ex: app/_layout.tsx)
+ *
+ * Seleção de tema:
+ *   - O NativeWind v5 detecta automaticamente o esquema de cores do sistema
+ *     via `useColorScheme()` e aplica as variantes @media (prefers-color-scheme).
+ *   - Para forçar dark: adicionar className="dark" no root ou usar
+ *     <NativeWindStyleSheet colorScheme="dark" />.
+ *
+ * Referência: https://www.nativewind.dev/v4/tailwind/theme
+ */
+
+@import "nativewind/stylesheet";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LIGHT MODE (padrão / :root)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+
+  /* ── Fontes ─────────────────────────────────────────────────────────────── */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-heading: "DMSans", system-ui, sans-serif;
+
+  /* ── Base ───────────────────────────────────────────────────────────────── */
+  --color-background:           #F8FAFC;
+  --color-background-deep:      #F1F5F9;
+  --color-surface:              #FFFFFF;
+  --color-surface-hover:        #F8FAFC;
+  --color-surface-2:            #F8FAFC;
+  --color-surface-3:            #FFFFFF;
+  --color-border:               #E2E8F0;
+  --color-border-subtle:        #F1F5F9;
+  --color-border-dashed:        #CBD5E1;
+
+  /* ── Overlay ────────────────────────────────────────────────────────────── */
+  --color-overlay:              rgba(0, 0, 0, 0.40);
+  --color-overlay-blur:         rgba(0, 0, 0, 0.30);
+
+  /* ── Texto (Foreground) ─────────────────────────────────────────────────── */
+  --color-foreground:           #0F172A;
+  --color-foreground-secondary: #475569;
+  --color-foreground-muted:     #64748B;
+  --color-foreground-card-meta: #0369A1;
+
+  /* ── Accent ─────────────────────────────────────────────────────────────── */
+  --color-accent:               #0369A1;
+  --color-accent-deep:          #075985;
+  --color-accent-foreground:    #FFFFFF;
+  --color-accent-muted:         rgba(3, 105, 161, 0.10);
+  --color-accent-glow:          rgba(3, 105, 161, 0.30);
+  --color-accent-ring:          rgba(3, 105, 161, 0.06);
+
+  /* ── Semântica ──────────────────────────────────────────────────────────── */
+  --color-destructive:               #DC2626;
+  --color-destructive-muted:         rgba(220, 38, 38, 0.10);
+  --color-destructive-muted-border:  rgba(220, 38, 38, 0.25);
+
+  --color-success:                   #047857;
+  --color-success-muted:             rgba(4, 120, 87, 0.10);
+  --color-success-muted-border:      rgba(4, 120, 87, 0.25);
+
+  --color-warning:                   #B45309;
+  --color-warning-muted:             rgba(180, 83, 9, 0.10);
+  --color-warning-muted-border:      rgba(180, 83, 9, 0.25);
+
+  --color-info:                      #0369A1;
+  --color-info-muted:                rgba(3, 105, 161, 0.10);
+  --color-info-muted-border:         rgba(3, 105, 161, 0.25);
+
+  /* ── Gráficos — Série principal ─────────────────────────────────────────── */
+  --color-chart-featured:       #0369A1;
+  --color-chart-ipca:           #475569;
+
+  /* ── Gráficos — Cestas ──────────────────────────────────────────────────── */
+  --color-chart-basket-1:       #7C3AED;
+  --color-chart-basket-2:       #DB2777;
+  --color-chart-basket-3:       #EA580C;
+
+  /* ── Gráficos — Volumes ─────────────────────────────────────────────────── */
+  --color-chart-volume-1:       #7C3AED;
+  --color-chart-volume-2:       #DB2777;
+  --color-chart-volume-3:       #EA580C;
+  --color-chart-volume-4:       #0891B2;
+  --color-chart-volume-5:       #C026D3;
+  --color-chart-volume-6:       #3F6212;
+
+  /* ── Componentes — Navegação ────────────────────────────────────────────── */
+  --color-tab-inactive:         #94A3B8;
+  --color-toggle-container:     #FFFFFF;
+  --color-sheet-handle:         #CBD5E1;
+
+  /* ── Componentes — Badges ───────────────────────────────────────────────── */
+  --color-badge-auto-bg:        #DBEAFE;
+  --color-badge-auto-text:      #1E40AF;
+
+  /* ── Componentes — Divisores ────────────────────────────────────────────── */
+  --color-divider-frozen-bg:    #F1F5F9;
+  --color-divider-frozen-text:  #475569;
+  --color-frozen-indicator-bg:  rgba(116, 132, 149, 0.15);
+
+  /* ── Raios de Borda ─────────────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ── Tipografia — Tamanhos ──────────────────────────────────────────────── */
+  --text-tag:           10px;
+  --text-label:         11px;
+  --text-caption:       12px;
+  --text-body:          14px;
+  --text-subheading:    16px;
+  --text-stat-small:    20px;
+  --text-stat-medium:   24px;
+  --text-heading:       24px;
+  --text-stat-large:    36px;
+
+  /* ── Tipografia — Pesos ─────────────────────────────────────────────────── */
+  --font-weight-regular:    400;
+  --font-weight-medium:     500;
+  --font-weight-semibold:   600;
+  --font-weight-bold:       700;
+
+  /* ── Tipografia — Line-height ───────────────────────────────────────────── */
+  --leading-tight:    1.2;
+  --leading-snug:     1.375;
+  --leading-normal:   1.5;
+  --leading-relaxed:  1.6;
+
+  /* ── Tipografia — Letter-spacing ────────────────────────────────────────── */
+  --tracking-normal:  0em;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.08em;
+
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   DARK MODE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+
+    /* ── Base ─────────────────────────────────────────────────────────────── */
+    --color-background:           #0F172A;
+    --color-background-deep:      #0A111E;
+    --color-surface:              #1E293B;
+    --color-surface-hover:        #263548;
+    --color-surface-2:            #162032;
+    --color-surface-3:            #172035;
+    --color-border:               #334155;
+    --color-border-subtle:        #1E293B;
+    --color-border-dashed:        #334155;
+
+    /* ── Overlay ──────────────────────────────────────────────────────────── */
+    --color-overlay:              rgba(0, 0, 0, 0.75);
+    --color-overlay-blur:         rgba(0, 0, 0, 0.70);
+
+    /* ── Texto (Foreground) ───────────────────────────────────────────────── */
+    --color-foreground:           #F1F5F9;
+    --color-foreground-secondary: #94A3B8;
+    --color-foreground-muted:     #748495;
+    --color-foreground-card-meta: #7CBFDA;
+
+    /* ── Accent ───────────────────────────────────────────────────────────── */
+    --color-accent:               #38BDF8;
+    --color-accent-deep:          #0EA5E9;
+    --color-accent-foreground:    #0F172A;
+    --color-accent-muted:         rgba(56, 189, 248, 0.12);
+    --color-accent-glow:          rgba(14, 165, 233, 0.18);
+    --color-accent-ring:          rgba(56, 189, 248, 0.08);
+
+    /* ── Semântica ────────────────────────────────────────────────────────── */
+    --color-destructive:               #F87171;
+    --color-destructive-muted:         rgba(248, 113, 113, 0.10);
+    --color-destructive-muted-border:  rgba(248, 113, 113, 0.25);
+
+    --color-success:                   #34D399;
+    --color-success-muted:             rgba(52, 211, 153, 0.10);
+    --color-success-muted-border:      rgba(52, 211, 153, 0.25);
+
+    --color-warning:                   #FBBF24;
+    --color-warning-muted:             rgba(251, 191, 36, 0.10);
+    --color-warning-muted-border:      rgba(251, 191, 36, 0.25);
+
+    --color-info:                      #38BDF8;
+    --color-info-muted:                rgba(56, 189, 248, 0.10);
+    --color-info-muted-border:         rgba(56, 189, 248, 0.25);
+
+    /* ── Gráficos — Série principal ───────────────────────────────────────── */
+    --color-chart-featured:       #38BDF8;
+    --color-chart-ipca:           #94A3B8;
+
+    /* ── Gráficos — Cestas ────────────────────────────────────────────────── */
+    --color-chart-basket-1:       #A78BFA;
+    --color-chart-basket-2:       #F472B6;
+    --color-chart-basket-3:       #FB923C;
+
+    /* ── Gráficos — Volumes ───────────────────────────────────────────────── */
+    --color-chart-volume-1:       #A78BFA;
+    --color-chart-volume-2:       #F472B6;
+    --color-chart-volume-3:       #FB923C;
+    --color-chart-volume-4:       #2DD4BF;
+    --color-chart-volume-5:       #E879F9;
+    --color-chart-volume-6:       #A3E635;
+
+    /* ── Componentes — Navegação ──────────────────────────────────────────── */
+    --color-tab-inactive:         #475569;
+    --color-toggle-container:     #0F172A;
+    --color-sheet-handle:         #334155;
+
+    /* ── Componentes — Badges ─────────────────────────────────────────────── */
+    --color-badge-auto-bg:        #0F172A;
+    --color-badge-auto-text:      #748495;
+
+    /* ── Componentes — Divisores ──────────────────────────────────────────── */
+    --color-divider-frozen-bg:    rgba(30, 41, 59, 0.80);
+    --color-divider-frozen-text:  #475569;
+    --color-frozen-indicator-bg:  rgba(116, 132, 149, 0.15);
+
+    /* Raios, tipografia e espaçamento são mode-agnostic: não repetir aqui */
+
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ALIASES SEMÂNTICOS (acesso conveniente em componentes)
+   
+   Uso no componente:
+     className="bg-surface text-foreground border-border"
+     className="text-destructive bg-destructive-muted"
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/*
+  bg-background          → fundo da tela
+  bg-background-deep     → fundo mais profundo
+  bg-surface             → cards e painéis
+  bg-surface-hover       → hover/pressed de items
+  bg-surface-2           → rowlist, separadores internos
+  bg-surface-3           → nested cards
+
+  text-foreground        → texto principal
+  text-foreground-secondary → subtítulos
+  text-foreground-muted  → datas, labels de eixo
+  text-foreground-card-meta → metadados coloridos em cards
+
+  text-accent            → links, ícones ativos
+  bg-accent              → botão primário
+  text-accent-foreground → texto sobre botão accent
+
+  text-destructive       → inflação subiu (+), erros
+  bg-destructive-muted   → fundo de badge de erro
+  border-destructive-muted-border → borda de container de erro
+
+  text-success           → inflação caiu (-), confirmações
+  bg-success-muted       → fundo de badge de sucesso
+
+  text-warning           → alertas, dados desatualizados
+  text-chart-featured    → linha principal do gráfico
+  text-chart-ipca        → linha IPCA de referência
+*/
