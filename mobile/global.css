@@ -1,69 +1,61 @@
 /* =============================================================================
    InflaçãoPessoal — mobile/global.css
    NativeWind v5 + Tailwind v4
-   Versão: 1.0.0  |  Gerado em: 2026-04-13
+   Versão: 2.0.0  |  Gerado em: 2026-04-13
    Fontes de verdade:
      - components/design-tokens.ts  (DARK e LIGHT — valores hex validados)
      - app/globals.css              (tokens web de referência)
      - docs/specs/design-tokens.md  (regras semânticas e acessibilidade)
 
    Estrutura:
-     1. Imports NativeWind v5 (4 imports granulares — NÃO @import "tailwindcss")
-     2. @theme  — tokens fixos (spacing, radius, type, durations) + aliases de
-                  cor via var() que reagem ao tema
-     3. :root   — dark mode (padrão MVP 1): valores canônicos hex/rgba
-     4. @media (prefers-color-scheme: light) — light mode (extensão futura)
-     5. Utility classes compostas (btn-*, card-*, chip-*, text-inflation-*, etc.)
+     1. Imports NativeWind v5 (4 granulares)
+     2. @theme — cores via var() + fixos literais (spacing, radius, type, etc.)
+     3. :root  — dark mode padrão (MVP 1): todos os tokens canônicos
+     4. @media (prefers-color-scheme: light) — extensão futura
+     5. Utility classes compostas (btn-*, card-*, chip-*, inflation-*, etc.)
    ============================================================================= */
 
+
 /* ── 1. Imports NativeWind v5 ─────────────────────────────────────────────────
-   IMPORTANTE: NÃO usar @import "tailwindcss" genérico.
-   IMPORTANTE: NÃO usar @import "nativewind/stylesheet" (isso é NativeWind v4).
-   Usar os 4 imports granulares abaixo.
+   NÃO usar @import "tailwindcss" genérico.
+   NÃO usar @import "nativewind/stylesheet" — isso é NativeWind v4.
    ----------------------------------------------------------------------------- */
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css";
 @import "nativewind/theme";
 
+
 /* ── 2. @theme — tokens Tailwind v4 ──────────────────────────────────────────
-   Regra de splitting:
-   - Tokens de COR → var() apontando para :root  (mudam com dark/light)
-   - Tokens FIXOS  → valores literais             (spacing, radius, type, etc.)
-   Naming: prefixo Tailwind obrigatório:
-     cores      → --color-*
-     espaçamento→ --spacing-*
-     radius     → --radius-*
-     fontes     → --font-*
-     tamanhos   → --text-*
-     pesos      → --font-weight-* (via font-weight utility no Tailwind v4)
-     sombras    → --shadow-*
-     duração    → --duration-*
-     easing     → --ease-*
+   Splitting:
+     Cores       → var() para :root  (mudam com o tema)
+     Fixos       → valores literais   (spacing, radius, type, shadow, animation)
+   Prefixos obrigatórios do Tailwind v4:
+     --color-*   --spacing-*   --radius-*   --font-*   --text-*
+     --shadow-*  --duration-*  --ease-*
    ----------------------------------------------------------------------------- */
 @theme {
 
   /* ════════════════════════════════════════════════════════════════════════════
-     TOKENS FIXOS — iguais em dark e light; valores literais
+     TOKENS FIXOS (mode-agnostic) — valores literais, não replicar no :root
      ════════════════════════════════════════════════════════════════════════════ */
 
   /* ── Fontes ─────────────────────────────────────────────────────────────── */
   --font-sans:    "Inter", system-ui, sans-serif;
-  --font-serif:   "DMSans", system-ui, sans-serif;
-  --font-mono:    "JetBrainsMono", "Courier New", monospace;
   --font-body:    "Inter", system-ui, sans-serif;
   --font-heading: "DMSans", system-ui, sans-serif;
+  --font-mono:    "JetBrainsMono", "Courier New", monospace;
 
-  /* ── Escala tipográfica — tamanhos ─────────────────────────────────────── */
-  --text-tag:          10px;   /* micro labels, filtros de eixo */
-  --text-label:        11px;   /* labels de campo, legenda de gráfico */
-  --text-caption:      12px;   /* metadados, timestamps, notas */
-  --text-body:         14px;   /* corpo de texto padrão */
-  --text-subheading:   16px;   /* títulos de seção */
-  --text-stat-small:   20px;   /* números de suporte em cards */
-  --text-stat-medium:  24px;   /* números secundários de destaque */
-  --text-heading:      24px;   /* títulos de tela */
-  --text-stat-large:   36px;   /* número principal de inflação no card hero */
+  /* ── Escala tipográfica — tamanhos ──────────────────────────────────────── */
+  --text-tag:         10px;   /* micro labels de eixo e categoria, sempre uppercase */
+  --text-label:       11px;   /* labels de campo de formulário, legenda de gráfico */
+  --text-caption:     12px;   /* metadados, timestamps, datas, notas de rodapé */
+  --text-body:        14px;   /* corpo de texto padrão, nome de produto */
+  --text-subheading:  16px;   /* título de seção interna */
+  --text-stat-small:  20px;   /* números de suporte em cards secundários */
+  --text-stat-medium: 24px;   /* valores monetários médios */
+  --text-heading:     24px;   /* título de tela e de card principal */
+  --text-stat-large:  36px;   /* número principal de inflação no card hero */
 
   /* ── Pesos tipográficos ─────────────────────────────────────────────────── */
   --font-weight-regular:  400;
@@ -72,6 +64,8 @@
   --font-weight-bold:     700;
 
   /* ── Espaçamento — múltiplos de 4px ────────────────────────────────────── */
+  --spacing-0:  0px;
+  --spacing-px: 1px;
   --spacing-1:  4px;
   --spacing-2:  8px;
   --spacing-3:  12px;
@@ -80,29 +74,33 @@
   --spacing-6:  24px;
   --spacing-7:  28px;
   --spacing-8:  32px;
+  --spacing-9:  36px;
   --spacing-10: 40px;
   --spacing-12: 48px;
   --spacing-14: 56px;
   --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
 
   /* ── Border radius ──────────────────────────────────────────────────────── */
-  --radius-xs:   4px;   /* tags, badges inline */
-  --radius-sm:   8px;   /* inputs, chips menores */
-  --radius-md:   12px;  /* botões, chips, cards compactos */
-  --radius-lg:   16px;  /* modais, drawers */
-  --radius-xl:   20px;  /* cards de lista */
-  --radius-2xl:  24px;  /* card hero, bottom sheet */
-  --radius-full: 9999px; /* pílulas, avatares */
+  --radius-xs:   4px;     /* badges inline, tags pequenas */
+  --radius-sm:   8px;     /* inputs, botões compactos, chips */
+  --radius-md:   12px;    /* botões padrão, chips, cards internos */
+  --radius-lg:   16px;    /* modais internos, drawers */
+  --radius-xl:   20px;    /* cards de lista, painéis laterais */
+  --radius-2xl:  24px;    /* card hero, bottom sheet principal */
+  --radius-full: 9999px;  /* pills, avatares, badges circulares */
 
-  /* ── Duração e easing ───────────────────────────────────────────────────── */
-  --duration-fast: 150ms;  /* micro-interações, ripple */
+  /* ── Duração de animação ────────────────────────────────────────────────── */
+  --duration-fast: 150ms;  /* micro-interações, ripple, hover */
   --duration-base: 200ms;  /* transições de estado padrão */
-  --duration-slow: 300ms;  /* modais, sheets, animações maiores */
+  --duration-slow: 300ms;  /* modais, sheets, animações de entrada */
 
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);       /* material standard */
-  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);  /* overshooting spring */
+  /* ── Easing ─────────────────────────────────────────────────────────────── */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);       /* Material Design standard */
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);  /* spring com overshoot */
 
-  /* ── Sombras — valores fixos (mesmo em light/dark) ─────────────────────── */
+  /* ── Sombras (valores fixos — independem do tema) ───────────────────────── */
   --shadow-fab:       0 4px 16px rgba(0, 0, 0, 0.40);
   --shadow-elevated:  0 2px 12px rgba(0, 0, 0, 0.30);
   --shadow-card-hero: 0 0 0 1px rgba(56, 189, 248, 0.08),
@@ -112,20 +110,21 @@
   --shadow-dropdown:  0 4px 20px rgba(0, 0, 0, 0.40);
   --shadow-sheet:     0 -4px 20px rgba(0, 0, 0, 0.40);
 
+
   /* ════════════════════════════════════════════════════════════════════════════
-     TOKENS DE COR — via var() → reagem ao :root (dark) e @media light
+     TOKENS DE COR — via var() → reagem ao :root (dark/light)
      ════════════════════════════════════════════════════════════════════════════ */
 
   /* ── Base ───────────────────────────────────────────────────────────────── */
-  --color-background:       var(--background);
-  --color-background-deep:  var(--background-deep);
-  --color-surface:          var(--surface);
-  --color-surface-hover:    var(--surface-hover);
-  --color-surface-2:        var(--surface-2);
-  --color-surface-3:        var(--surface-3);
-  --color-border:           var(--border);
-  --color-border-subtle:    var(--border-subtle);
-  --color-border-dashed:    var(--border-dashed);
+  --color-background:      var(--background);
+  --color-background-deep: var(--background-deep);
+  --color-surface:         var(--surface);
+  --color-surface-hover:   var(--surface-hover);
+  --color-surface-2:       var(--surface-2);
+  --color-surface-3:       var(--surface-3);
+  --color-border:          var(--border);
+  --color-border-subtle:   var(--border-subtle);
+  --color-border-dashed:   var(--border-dashed);
 
   /* ── Overlay ────────────────────────────────────────────────────────────── */
   --color-overlay:      var(--overlay);
@@ -162,12 +161,16 @@
   --color-info-muted:        var(--info-muted);
   --color-info-muted-border: var(--info-muted-border);
 
-  /* ── Gráficos ───────────────────────────────────────────────────────────── */
+  /* ── Gráficos — Séries ──────────────────────────────────────────────────── */
   --color-chart-featured: var(--chart-featured);
   --color-chart-ipca:     var(--chart-ipca);
+
+  /* ── Gráficos — Cestas ──────────────────────────────────────────────────── */
   --color-chart-basket-1: var(--chart-basket-1);
   --color-chart-basket-2: var(--chart-basket-2);
   --color-chart-basket-3: var(--chart-basket-3);
+
+  /* ── Gráficos — Volumes ─────────────────────────────────────────────────── */
   --color-chart-volume-1: var(--chart-volume-1);
   --color-chart-volume-2: var(--chart-volume-2);
   --color-chart-volume-3: var(--chart-volume-3);
@@ -175,23 +178,26 @@
   --color-chart-volume-5: var(--chart-volume-5);
   --color-chart-volume-6: var(--chart-volume-6);
 
-  /* ── Botões ─────────────────────────────────────────────────────────────── */
+  /* ── Botões — Primary ───────────────────────────────────────────────────── */
   --color-btn-primary-bg:            var(--btn-primary-bg);
   --color-btn-primary-text:          var(--btn-primary-text);
   --color-btn-primary-bg-pressed:    var(--btn-primary-bg-pressed);
   --color-btn-primary-bg-disabled:   var(--btn-primary-bg-disabled);
   --color-btn-primary-text-disabled: var(--btn-primary-text-disabled);
 
+  /* ── Botões — Secondary ─────────────────────────────────────────────────── */
   --color-btn-secondary-border:          var(--btn-secondary-border);
   --color-btn-secondary-text:            var(--btn-secondary-text);
   --color-btn-secondary-bg-pressed:      var(--btn-secondary-bg-pressed);
   --color-btn-secondary-border-disabled: var(--btn-secondary-border-disabled);
   --color-btn-secondary-text-disabled:   var(--btn-secondary-text-disabled);
 
+  /* ── Botões — Ghost ─────────────────────────────────────────────────────── */
   --color-btn-ghost-text:          var(--btn-ghost-text);
   --color-btn-ghost-bg-pressed:    var(--btn-ghost-bg-pressed);
   --color-btn-ghost-text-disabled: var(--btn-ghost-text-disabled);
 
+  /* ── Botões — Destructive ───────────────────────────────────────────────── */
   --color-btn-destructive-border:          var(--btn-destructive-border);
   --color-btn-destructive-text:            var(--btn-destructive-text);
   --color-btn-destructive-bg-pressed:      var(--btn-destructive-bg-pressed);
@@ -200,11 +206,14 @@
   --color-btn-destructive-text-disabled:   var(--btn-destructive-text-disabled);
 
   /* ── Card ───────────────────────────────────────────────────────────────── */
-  --color-card-bg:               var(--card-bg);
-  --color-card-border:           var(--card-border);
-  --color-card-highlight-border: var(--card-highlight-border);
-  --color-card-highlight-glow:   var(--card-highlight-glow);
+  --color-card-bg:                var(--card-bg);
+  --color-card-border:            var(--card-border);
+  --color-card-highlight-border:  var(--card-highlight-border);
+  --color-card-highlight-glow:    var(--card-highlight-glow);
   --color-card-highlight-divider: var(--card-highlight-divider);
+  /* Gradientes (card-highlight-bg, card-highlight-accent-line) não suportados
+     como CSS custom property em React Native. Usar DARK/LIGHT.cardHighlightBg
+     diretamente via style={{ background: ... }} no componente. */
 
   /* ── Input ──────────────────────────────────────────────────────────────── */
   --color-input-bg:              var(--input-bg);
@@ -217,9 +226,9 @@
   --color-input-disabled-border: var(--input-disabled-border);
 
   /* ── Tab bar ────────────────────────────────────────────────────────────── */
-  --color-tab-bar-bg:        var(--tab-bar-bg);
-  --color-tab-bar-border:    var(--tab-bar-border);
-  --color-tab-active-color:  var(--tab-active-color);
+  --color-tab-bar-bg:         var(--tab-bar-bg);
+  --color-tab-bar-border:     var(--tab-bar-border);
+  --color-tab-active-color:   var(--tab-active-color);
   --color-tab-inactive-color: var(--tab-inactive-color);
 
   /* ── Toggle / Segmented Control ─────────────────────────────────────────── */
@@ -236,90 +245,166 @@
   --color-chip-active-border: var(--chip-active-border);
   --color-chip-active-text:   var(--chip-active-text);
 
-  /* ── Outros componentes ─────────────────────────────────────────────────── */
-  --color-skeleton-bg:         var(--skeleton-bg);
-  --color-skeleton-shine:      var(--skeleton-shine);
-  --color-badge-auto-bg:       var(--badge-auto-bg);
-  --color-badge-auto-text:     var(--badge-auto-text);
+  /* ── Skeleton ───────────────────────────────────────────────────────────── */
+  --color-skeleton-bg:    var(--skeleton-bg);
+  --color-skeleton-shine: var(--skeleton-shine);
+
+  /* ── Badge ──────────────────────────────────────────────────────────────── */
+  --color-badge-auto-bg:   var(--badge-auto-bg);
+  --color-badge-auto-text: var(--badge-auto-text);
+
+  /* ── Divisores / Frozen ─────────────────────────────────────────────────── */
   --color-divider-frozen-bg:   var(--divider-frozen-bg);
   --color-divider-frozen-text: var(--divider-frozen-text);
   --color-frozen-indicator-bg: var(--frozen-indicator-bg);
-  --color-sheet-handle:        var(--sheet-handle);
-  --color-modal-backdrop:      var(--modal-backdrop);
+
+  /* ── Sheet / Modal ──────────────────────────────────────────────────────── */
+  --color-sheet-handle:   var(--sheet-handle);
+  --color-modal-backdrop: var(--modal-backdrop);
+
+  /* ── [Futuro] FAB Menu ──────────────────────────────────────────────────── */
+  --color-fab-menu-bg:           var(--fab-menu-bg);
+  --color-fab-menu-border:       var(--fab-menu-border);
+  --color-fab-menu-item-bg:      var(--fab-menu-item-bg);
+  --color-fab-menu-item-pressed: var(--fab-menu-item-pressed);
+
+  /* ── [Futuro] Segmented Tabs ────────────────────────────────────────────── */
+  --color-segmented-tab-bg:           var(--segmented-tab-bg);
+  --color-segmented-tab-active-bg:    var(--segmented-tab-active-bg);
+  --color-segmented-tab-active-text:  var(--segmented-tab-active-text);
+  --color-segmented-tab-inactive-text: var(--segmented-tab-inactive-text);
+
+  /* ── [Futuro] Tag Removível ─────────────────────────────────────────────── */
+  --color-tag-bg:          var(--tag-bg);
+  --color-tag-text:        var(--tag-text);
+  --color-tag-remove-icon: var(--tag-remove-icon);
+
+  /* ── [Futuro] Date Picker ───────────────────────────────────────────────── */
+  --color-datepicker-bg:            var(--datepicker-bg);
+  --color-datepicker-border:        var(--datepicker-border);
+  --color-datepicker-selected-bg:   var(--datepicker-selected-bg);
+  --color-datepicker-selected-text: var(--datepicker-selected-text);
+  --color-datepicker-today-border:  var(--datepicker-today-border);
+
+  /* ── [Futuro] Slider ────────────────────────────────────────────────────── */
+  --color-slider-track-bg:     var(--slider-track-bg);
+  --color-slider-track-fill:   var(--slider-track-fill);
+  --color-slider-thumb-bg:     var(--slider-thumb-bg);
+  --color-slider-thumb-border: var(--slider-thumb-border);
+
+  /* ── [Futuro] Switch ────────────────────────────────────────────────────── */
+  --color-switch-track-off: var(--switch-track-off);
+  --color-switch-track-on:  var(--switch-track-on);
+  --color-switch-thumb:     var(--switch-thumb);
+
+  /* ── [Futuro] Radio ─────────────────────────────────────────────────────── */
+  --color-radio-border:      var(--radio-border);
+  --color-radio-selected-bg: var(--radio-selected-bg);
+  --color-radio-selected-dot: var(--radio-selected-dot);
+
+  /* ── [Futuro] Content Tabs ──────────────────────────────────────────────── */
+  --color-content-tab-border:         var(--content-tab-border);
+  --color-content-tab-active-border:  var(--content-tab-active-border);
+  --color-content-tab-active-text:    var(--content-tab-active-text);
+  --color-content-tab-inactive-text:  var(--content-tab-inactive-text);
+
+  /* ── [Futuro] Snackbar ──────────────────────────────────────────────────── */
+  --color-snackbar-bg:     var(--snackbar-bg);
+  --color-snackbar-text:   var(--snackbar-text);
+  --color-snackbar-action: var(--snackbar-action);
+
+  /* ── [Futuro] Progress Bar ──────────────────────────────────────────────── */
+  --color-progress-track-bg: var(--progress-track-bg);
+  --color-progress-fill:     var(--progress-fill);
+
+  /* ── [Futuro] Avatar ────────────────────────────────────────────────────── */
+  --color-avatar-bg:     var(--avatar-bg);
+  --color-avatar-text:   var(--avatar-text);
+  --color-avatar-border: var(--avatar-border);
+
+  /* ── [Futuro] Swipe Actions ─────────────────────────────────────────────── */
+  --color-swipe-destructive-bg: var(--swipe-destructive-bg);
+  --color-swipe-action-bg:      var(--swipe-action-bg);
 
 } /* fim @theme */
 
+
 /* ── 3. :root — Dark mode (padrão MVP 1) ──────────────────────────────────────
    Dark mode é o tema padrão. Valores canônicos sem prefixo Tailwind.
-   Fonte: components/design-tokens.ts → DARK.*
+   Fonte canônica: components/design-tokens.ts → DARK.*
    ----------------------------------------------------------------------------- */
 :root {
 
   /* ── Base ───────────────────────────────────────────────────────────────── */
-  --background:       #0F172A;   /* DARK.bg — tela principal */
-  --background-deep:  #0A111E;   /* DARK.bgDeep — modais, bottom sheets */
-  --surface:          #1E293B;   /* DARK.surface — cards, painéis elevados */
-  --surface-hover:    #263548;   /* DARK.surfaceHover — pressed/active de surface */
-  --surface-2:        #162032;   /* DARK.surface2 — rows alternadas, seções */
-  --surface-3:        #172035;   /* DARK.surface3 — nested cards */
-  --border:           #334155;   /* DARK.border — divisores e bordas visíveis */
-  --border-subtle:    #1E293B;   /* DARK.borderSubtle — bordas quase invisíveis */
-  --border-dashed:    #334155;   /* DARK.borderDashed — bordas tracejadas */
+  --background:      #0F172A;   /* DARK.bg */
+  --background-deep: #0A111E;   /* DARK.bgDeep */
+  --surface:         #1E293B;   /* DARK.surface */
+  --surface-hover:   #263548;   /* DARK.surfaceHover */
+  --surface-2:       #162032;   /* DARK.surface2 */
+  --surface-3:       #172035;   /* DARK.surface3 */
+  --border:          #334155;   /* DARK.border */
+  --border-subtle:   #1E293B;   /* DARK.borderSubtle */
+  --border-dashed:   #334155;   /* DARK.borderDashed */
 
   /* ── Overlay ────────────────────────────────────────────────────────────── */
-  --overlay:      rgba(0, 0, 0, 0.75);  /* DARK.overlay — scrim de modal */
-  --overlay-blur: rgba(0, 0, 0, 0.70);  /* DARK.overlayBlur — backdrop blur */
+  --overlay:      rgba(0, 0, 0, 0.75);  /* DARK.overlay */
+  --overlay-blur: rgba(0, 0, 0, 0.70);  /* DARK.overlayBlur */
 
   /* ── Texto ──────────────────────────────────────────────────────────────── */
-  --foreground:            #F1F5F9;  /* DARK.fg — corpo de texto principal */
-  --foreground-secondary:  #94A3B8;  /* DARK.fgSecondary — labels, subtítulos */
-  --foreground-muted:      #748495;  /* DARK.fgMuted — placeholders, metadados */
-  --foreground-card-meta:  #7CBFDA;  /* DARK.fgCardMeta — meta colorido no card hero */
+  --foreground:           #F1F5F9;  /* DARK.fg */
+  --foreground-secondary: #94A3B8;  /* DARK.fgSecondary */
+  --foreground-muted:     #748495;  /* DARK.fgMuted */
+  --foreground-card-meta: #7CBFDA;  /* DARK.fgCardMeta */
 
   /* ── Accent ─────────────────────────────────────────────────────────────── */
-  --accent:            #38BDF8;               /* DARK.accent — sky-400 */
-  --accent-deep:       #0EA5E9;               /* DARK.accentDeep — sky-500 */
-  --accent-foreground: #0F172A;               /* DARK.accentFg — texto sobre accent */
-  --accent-muted:      rgba(56, 189, 248, 0.12);  /* DARK.accentMuted — bg de badges */
-  --accent-glow:       rgba(14, 165, 233, 0.18);  /* DARK.accentGlow — glow gráficos */
-  --accent-ring:       rgba(56, 189, 248, 0.08);  /* DARK.accentRing — anel de foco */
+  --accent:            #38BDF8;                   /* DARK.accent */
+  --accent-deep:       #0EA5E9;                   /* DARK.accentDeep */
+  --accent-foreground: #0F172A;                   /* DARK.accentFg */
+  --accent-muted:      rgba(56, 189, 248, 0.12);  /* DARK.accentMuted */
+  --accent-glow:       rgba(14, 165, 233, 0.18);  /* DARK.accentGlow */
+  --accent-ring:       rgba(56, 189, 248, 0.08);  /* DARK.accentRing */
 
   /* ── Semântica ──────────────────────────────────────────────────────────── */
   /*
-    REGRA CRÍTICA DE NEGÓCIO:
-      inflação POSITIVA (pct > 0) = destructive (vermelho) — preço subiu, é ruim
-      inflação NEGATIVA (pct < 0) = success (verde)        — preço caiu, é bom
-      inflação ZERO               = foreground-muted        — neutro
-    Esta inversão é intencional. Não alterar sem revisão do product design.
+    REGRA CRITICA DE NEGOCIO — inflação de preços:
+      pct > 0  →  destructive (vermelho)  — preço subiu, ruim para o consumidor
+      pct < 0  →  success (verde)         — preço caiu, bom para o consumidor
+      pct = 0  →  foreground-muted (cinza)— neutro
+    Esta inversão é INTENCIONAL e difere de apps financeiros de ações.
+    Não alterar sem revisão do product design.
   */
   --destructive:              #F87171;                    /* DARK.destructive */
   --destructive-muted:        rgba(248, 113, 113, 0.10);  /* DARK.destructiveMuted */
   --destructive-muted-border: rgba(248, 113, 113, 0.25);  /* DARK.destructiveMutedBorder */
 
-  --success:              #34D399;                    /* DARK.success */
-  --success-muted:        rgba(52, 211, 153, 0.10);   /* DARK.successMuted */
-  --success-muted-border: rgba(52, 211, 153, 0.25);   /* DARK.successMutedBorder */
+  --success:              #34D399;                   /* DARK.success */
+  --success-muted:        rgba(52, 211, 153, 0.10);  /* DARK.successMuted */
+  --success-muted-border: rgba(52, 211, 153, 0.25);  /* DARK.successMutedBorder */
 
-  --warning:              #FBBF24;                    /* DARK.warning */
-  --warning-muted:        rgba(251, 191, 36, 0.10);   /* DARK.warningMuted */
-  --warning-muted-border: rgba(251, 191, 36, 0.25);   /* DARK.warningMutedBorder */
+  --warning:              #FBBF24;                   /* DARK.warning */
+  --warning-muted:        rgba(251, 191, 36, 0.10);  /* DARK.warningMuted */
+  --warning-muted-border: rgba(251, 191, 36, 0.25);  /* DARK.warningMutedBorder */
 
-  --info:              #38BDF8;                    /* DARK.info — igual accent em dark */
-  --info-muted:        rgba(56, 189, 248, 0.10);   /* DARK.infoMuted */
-  --info-muted-border: rgba(56, 189, 248, 0.25);   /* DARK.infoMutedBorder */
+  --info:              #38BDF8;                   /* DARK.info (= accent em dark) */
+  --info-muted:        rgba(56, 189, 248, 0.10);  /* DARK.infoMuted */
+  --info-muted-border: rgba(56, 189, 248, 0.25);  /* DARK.infoMutedBorder */
 
-  /* ── Gráficos ───────────────────────────────────────────────────────────── */
-  --chart-featured:  #38BDF8;  /* DARK.chartFeatured — linha da cesta em destaque */
-  --chart-ipca:      #94A3B8;  /* DARK.chartIpca — IPCA de referência */
-  --chart-basket-1:  #A78BFA;  /* DARK.chartBasket1 — cesta 1 violet */
-  --chart-basket-2:  #F472B6;  /* DARK.chartBasket2 — cesta 2 pink */
-  --chart-basket-3:  #FB923C;  /* DARK.chartBasket3 — cesta 3 orange */
-  --chart-volume-1:  #A78BFA;  /* DARK.chartVolume1 */
-  --chart-volume-2:  #F472B6;  /* DARK.chartVolume2 */
-  --chart-volume-3:  #FB923C;  /* DARK.chartVolume3 */
-  --chart-volume-4:  #2DD4BF;  /* DARK.chartVolume4 teal */
-  --chart-volume-5:  #E879F9;  /* DARK.chartVolume5 fuchsia */
-  --chart-volume-6:  #A3E635;  /* DARK.chartVolume6 lime */
+  /* ── Gráficos — Séries principais ───────────────────────────────────────── */
+  --chart-featured: #38BDF8;  /* DARK.chartFeatured — cesta do usuário, 2px */
+  --chart-ipca:     #94A3B8;  /* DARK.chartIpca — referência IPCA, 1.5px tracejado */
+
+  /* ── Gráficos — Cestas comparativas ────────────────────────────────────── */
+  --chart-basket-1: #A78BFA;  /* DARK.chartBasket1 — violeta */
+  --chart-basket-2: #F472B6;  /* DARK.chartBasket2 — rosa */
+  --chart-basket-3: #FB923C;  /* DARK.chartBasket3 — âmbar */
+
+  /* ── Gráficos — Volumes por categoria ──────────────────────────────────── */
+  --chart-volume-1: #A78BFA;  /* DARK.chartVolume1 — violeta */
+  --chart-volume-2: #F472B6;  /* DARK.chartVolume2 — rosa */
+  --chart-volume-3: #FB923C;  /* DARK.chartVolume3 — âmbar */
+  --chart-volume-4: #2DD4BF;  /* DARK.chartVolume4 — teal */
+  --chart-volume-5: #E879F9;  /* DARK.chartVolume5 — fúcsia */
+  --chart-volume-6: #A3E635;  /* DARK.chartVolume6 — lima */
 
   /* ── Botões — Primary ───────────────────────────────────────────────────── */
   --btn-primary-bg:            #38BDF8;  /* = accent */
@@ -344,19 +429,16 @@
   --btn-destructive-border:          #F87171;                    /* = destructive */
   --btn-destructive-text:            #F87171;                    /* = destructive */
   --btn-destructive-bg-pressed:      rgba(248, 113, 113, 0.10);  /* = destructive-muted */
-  --btn-destructive-text-pressed:    #FECACA;                    /* red-200 — clareia ao press */
+  --btn-destructive-text-pressed:    #FECACA;                    /* red-200, clareia no press */
   --btn-destructive-border-disabled: #334155;                    /* = border */
   --btn-destructive-text-disabled:   #748495;                    /* = foreground-muted */
 
   /* ── Card ───────────────────────────────────────────────────────────────── */
-  --card-bg:                #1E293B;                    /* = surface */
-  --card-border:            #334155;                    /* = border */
-  --card-highlight-border:  #2A6496;                    /* DARK.cardHighlightBorder */
-  --card-highlight-glow:    rgba(56, 189, 248, 0.20);   /* DARK.cardHighlightGlow */
-  --card-highlight-divider: rgba(56, 189, 248, 0.15);   /* DARK.cardHighlightDivider */
-  /* Nota: gradientes (card-highlight-bg, card-highlight-accent-line) não são
-     suportados como CSS var() em RN. Usar inline via style={{ background: ... }}
-     com os valores de DARK.cardHighlightBg e DARK.cardHighlightAccentLine. */
+  --card-bg:                #1E293B;                   /* = surface */
+  --card-border:            #334155;                   /* = border */
+  --card-highlight-border:  #2A6496;                   /* DARK.cardHighlightBorder */
+  --card-highlight-glow:    rgba(56, 189, 248, 0.20);  /* DARK.cardHighlightGlow */
+  --card-highlight-divider: rgba(56, 189, 248, 0.15);  /* DARK.cardHighlightDivider */
 
   /* ── Input ──────────────────────────────────────────────────────────────── */
   --input-bg:              #162032;                    /* = surface-2 */
@@ -369,104 +451,180 @@
   --input-disabled-border: #1E293B;                    /* = border-subtle */
 
   /* ── Tab bar ────────────────────────────────────────────────────────────── */
-  --tab-bar-bg:        #0F172A;  /* = background */
-  --tab-bar-border:    #1E293B;  /* = border-subtle */
-  --tab-active-color:  #38BDF8;  /* = accent */
-  --tab-inactive-color: #475569; /* DARK.tabInactive */
+  --tab-bar-bg:         #0F172A;  /* = background */
+  --tab-bar-border:     #1E293B;  /* = border-subtle */
+  --tab-active-color:   #38BDF8;  /* = accent */
+  --tab-inactive-color: #475569;  /* DARK.tabInactive */
 
   /* ── Toggle / Segmented Control ─────────────────────────────────────────── */
   --toggle-container-bg: #0F172A;  /* DARK.toggleContainer */
-  --toggle-active-bg:    #1E293B;  /* = surface — pílula ativa */
+  --toggle-active-bg:    #1E293B;  /* = surface */
   --toggle-active-fg:    #F1F5F9;  /* = foreground */
   --toggle-inactive-fg:  #748495;  /* = foreground-muted */
 
   /* ── Chip / Filter ──────────────────────────────────────────────────────── */
-  --chip-bg:            #1E293B;                    /* = surface */
-  --chip-border:        #334155;                    /* = border */
-  --chip-text:          #94A3B8;                    /* = foreground-secondary */
-  --chip-active-bg:     rgba(56, 189, 248, 0.12);   /* = accent-muted */
-  --chip-active-border: #38BDF8;                    /* = accent */
-  --chip-active-text:   #38BDF8;                    /* = accent */
+  --chip-bg:            #1E293B;                   /* = surface */
+  --chip-border:        #334155;                   /* = border */
+  --chip-text:          #94A3B8;                   /* = foreground-secondary */
+  --chip-active-bg:     rgba(56, 189, 248, 0.12);  /* = accent-muted */
+  --chip-active-border: #38BDF8;                   /* = accent */
+  --chip-active-text:   #38BDF8;                   /* = accent */
 
-  /* ── Outros componentes ─────────────────────────────────────────────────── */
-  --skeleton-bg:         #1E293B;                    /* = surface */
-  --skeleton-shine:      rgba(255, 255, 255, 0.04);  /* brilho sutil shimmer dark */
-  --badge-auto-bg:       #0F172A;                    /* DARK.badgeAutoBg */
-  --badge-auto-text:     #748495;                    /* DARK.badgeAutoText */
-  --divider-frozen-bg:   rgba(30, 41, 59, 0.80);     /* DARK.dividerFrozenBg */
+  /* ── Skeleton ───────────────────────────────────────────────────────────── */
+  --skeleton-bg:    #1E293B;                    /* = surface */
+  --skeleton-shine: rgba(255, 255, 255, 0.04);  /* brilho sutil shimmer dark */
+
+  /* ── Badge ──────────────────────────────────────────────────────────────── */
+  --badge-auto-bg:   #0F172A;  /* DARK.badgeAutoBg */
+  --badge-auto-text: #748495;  /* DARK.badgeAutoText */
+
+  /* ── Divisores / Frozen ─────────────────────────────────────────────────── */
+  --divider-frozen-bg:   rgba(30, 41, 59, 0.80);    /* DARK.dividerFrozenBg */
   --divider-frozen-text: #475569;                    /* DARK.dividerFrozenText */
   --frozen-indicator-bg: rgba(116, 132, 149, 0.15);  /* DARK.frozenIndicatorBg */
-  --sheet-handle:        #334155;                    /* DARK.sheetHandle */
-  --modal-backdrop:      rgba(0, 0, 0, 0.75);        /* = overlay */
+
+  /* ── Sheet / Modal ──────────────────────────────────────────────────────── */
+  --sheet-handle:   #334155;                    /* DARK.sheetHandle */
+  --modal-backdrop: rgba(0, 0, 0, 0.75);        /* = overlay */
+
+  /* ── [Futuro] FAB Menu ──────────────────────────────────────────────────── */
+  --fab-menu-bg:           #1E293B;                   /* = surface */
+  --fab-menu-border:       #334155;                   /* = border */
+  --fab-menu-item-bg:      #162032;                   /* = surface-2 */
+  --fab-menu-item-pressed: #263548;                   /* = surface-hover */
+
+  /* ── [Futuro] Segmented Tabs ────────────────────────────────────────────── */
+  --segmented-tab-bg:            #162032;   /* = surface-2 */
+  --segmented-tab-active-bg:     #1E293B;   /* = surface */
+  --segmented-tab-active-text:   #F1F5F9;   /* = foreground */
+  --segmented-tab-inactive-text: #748495;   /* = foreground-muted */
+
+  /* ── [Futuro] Tag Removível ─────────────────────────────────────────────── */
+  --tag-bg:          rgba(56, 189, 248, 0.12);  /* = accent-muted */
+  --tag-text:        #38BDF8;                   /* = accent */
+  --tag-remove-icon: #94A3B8;                   /* = foreground-secondary */
+
+  /* ── [Futuro] Date Picker ───────────────────────────────────────────────── */
+  --datepicker-bg:            #1E293B;                   /* = surface */
+  --datepicker-border:        #334155;                   /* = border */
+  --datepicker-selected-bg:   #38BDF8;                   /* = accent */
+  --datepicker-selected-text: #0F172A;                   /* = accent-foreground */
+  --datepicker-today-border:  rgba(56, 189, 248, 0.50);  /* accent com opacidade */
+
+  /* ── [Futuro] Slider ────────────────────────────────────────────────────── */
+  --slider-track-bg:     #334155;   /* = border */
+  --slider-track-fill:   #38BDF8;   /* = accent */
+  --slider-thumb-bg:     #F1F5F9;   /* = foreground */
+  --slider-thumb-border: #38BDF8;   /* = accent */
+
+  /* ── [Futuro] Switch ────────────────────────────────────────────────────── */
+  --switch-track-off: #334155;   /* = border */
+  --switch-track-on:  #38BDF8;   /* = accent */
+  --switch-thumb:     #F1F5F9;   /* = foreground */
+
+  /* ── [Futuro] Radio ─────────────────────────────────────────────────────── */
+  --radio-border:      #334155;   /* = border */
+  --radio-selected-bg: #38BDF8;   /* = accent */
+  --radio-selected-dot: #0F172A;  /* = accent-foreground */
+
+  /* ── [Futuro] Content Tabs ──────────────────────────────────────────────── */
+  --content-tab-border:          #334155;   /* = border */
+  --content-tab-active-border:   #38BDF8;   /* = accent */
+  --content-tab-active-text:     #F1F5F9;   /* = foreground */
+  --content-tab-inactive-text:   #748495;   /* = foreground-muted */
+
+  /* ── [Futuro] Snackbar ──────────────────────────────────────────────────── */
+  --snackbar-bg:     #263548;   /* = surface-hover */
+  --snackbar-text:   #F1F5F9;   /* = foreground */
+  --snackbar-action: #38BDF8;   /* = accent */
+
+  /* ── [Futuro] Progress Bar ──────────────────────────────────────────────── */
+  --progress-track-bg: #334155;   /* = border */
+  --progress-fill:     #38BDF8;   /* = accent */
+
+  /* ── [Futuro] Avatar ────────────────────────────────────────────────────── */
+  --avatar-bg:     #162032;                   /* = surface-2 */
+  --avatar-text:   #94A3B8;                   /* = foreground-secondary */
+  --avatar-border: rgba(56, 189, 248, 0.20);  /* = accent-glow */
+
+  /* ── [Futuro] Swipe Actions ─────────────────────────────────────────────── */
+  --swipe-destructive-bg: rgba(248, 113, 113, 0.20);  /* destructive com opacidade */
+  --swipe-action-bg:      rgba(56, 189, 248, 0.12);   /* = accent-muted */
 
 } /* fim :root dark mode */
 
 
-/* ── 4. Light mode — extensibilidade futura ───────────────────────────────────
-   Dark é o padrão (MVP 1). Light mode será ativado automaticamente pelo sistema
-   quando o app suportar múltiplos temas. Valores: design-tokens.ts → LIGHT.*
+/* ── 4. @media (prefers-color-scheme: light) — extensão futura ───────────────
+   Dark mode é o padrão do MVP 1. Light mode ativado automaticamente pelo SO
+   quando o app implementar suporte a múltiplos temas.
+   Fonte canônica: components/design-tokens.ts → LIGHT.*
+   Para ativar: remover forçamento de dark mode no entry point do app.
    ----------------------------------------------------------------------------- */
 @media (prefers-color-scheme: light) {
   :root {
 
     /* ── Base ─────────────────────────────────────────────────────────────── */
-    --background:       #F8FAFC;   /* LIGHT.bg */
-    --background-deep:  #F1F5F9;   /* LIGHT.bgDeep */
-    --surface:          #FFFFFF;   /* LIGHT.surface */
-    --surface-hover:    #F8FAFC;   /* LIGHT.surfaceHover */
-    --surface-2:        #F8FAFC;   /* LIGHT.surface2 */
-    --surface-3:        #FFFFFF;   /* LIGHT.surface3 */
-    --border:           #E2E8F0;   /* LIGHT.border */
-    --border-subtle:    #F1F5F9;   /* LIGHT.borderSubtle */
-    --border-dashed:    #CBD5E1;   /* LIGHT.borderDashed */
+    --background:      #F8FAFC;   /* LIGHT.bg */
+    --background-deep: #F1F5F9;   /* LIGHT.bgDeep */
+    --surface:         #FFFFFF;   /* LIGHT.surface */
+    --surface-hover:   #F8FAFC;   /* LIGHT.surfaceHover */
+    --surface-2:       #F8FAFC;   /* LIGHT.surface2 */
+    --surface-3:       #FFFFFF;   /* LIGHT.surface3 */
+    --border:          #E2E8F0;   /* LIGHT.border */
+    --border-subtle:   #F1F5F9;   /* LIGHT.borderSubtle */
+    --border-dashed:   #CBD5E1;   /* LIGHT.borderDashed */
 
     /* ── Overlay ──────────────────────────────────────────────────────────── */
     --overlay:      rgba(0, 0, 0, 0.40);  /* LIGHT.overlay */
     --overlay-blur: rgba(0, 0, 0, 0.30);  /* LIGHT.overlayBlur */
 
     /* ── Texto ────────────────────────────────────────────────────────────── */
-    --foreground:            #0F172A;  /* LIGHT.fg */
-    --foreground-secondary:  #475569;  /* LIGHT.fgSecondary */
-    --foreground-muted:      #64748B;  /* LIGHT.fgMuted */
-    --foreground-card-meta:  #0369A1;  /* LIGHT.fgCardMeta */
+    --foreground:           #0F172A;  /* LIGHT.fg */
+    --foreground-secondary: #475569;  /* LIGHT.fgSecondary */
+    --foreground-muted:     #64748B;  /* LIGHT.fgMuted */
+    --foreground-card-meta: #0369A1;  /* LIGHT.fgCardMeta */
 
     /* ── Accent ───────────────────────────────────────────────────────────── */
-    --accent:            #0369A1;               /* LIGHT.accent — sky-700 */
-    --accent-deep:       #075985;               /* LIGHT.accentDeep */
-    --accent-foreground: #FFFFFF;               /* LIGHT.accentFg */
+    --accent:            #0369A1;                  /* LIGHT.accent */
+    --accent-deep:       #075985;                  /* LIGHT.accentDeep */
+    --accent-foreground: #FFFFFF;                  /* LIGHT.accentFg */
     --accent-muted:      rgba(3, 105, 161, 0.10);  /* LIGHT.accentMuted */
     --accent-glow:       rgba(3, 105, 161, 0.30);  /* LIGHT.accentGlow */
     --accent-ring:       rgba(3, 105, 161, 0.06);  /* LIGHT.accentRing */
 
     /* ── Semântica ────────────────────────────────────────────────────────── */
-    --destructive:              #DC2626;                    /* LIGHT.destructive */
-    --destructive-muted:        rgba(220, 38, 38, 0.10);    /* LIGHT.destructiveMuted */
-    --destructive-muted-border: rgba(220, 38, 38, 0.25);    /* LIGHT.destructiveMutedBorder */
+    --destructive:              #DC2626;                   /* LIGHT.destructive */
+    --destructive-muted:        rgba(220, 38, 38, 0.10);   /* LIGHT.destructiveMuted */
+    --destructive-muted-border: rgba(220, 38, 38, 0.25);   /* LIGHT.destructiveMutedBorder */
 
-    --success:              #047857;                    /* LIGHT.success */
-    --success-muted:        rgba(4, 120, 87, 0.10);     /* LIGHT.successMuted */
-    --success-muted-border: rgba(4, 120, 87, 0.25);     /* LIGHT.successMutedBorder */
+    --success:              #047857;                  /* LIGHT.success */
+    --success-muted:        rgba(4, 120, 87, 0.10);   /* LIGHT.successMuted */
+    --success-muted-border: rgba(4, 120, 87, 0.25);   /* LIGHT.successMutedBorder */
 
-    --warning:              #B45309;                    /* LIGHT.warning */
-    --warning-muted:        rgba(180, 83, 9, 0.10);     /* LIGHT.warningMuted */
-    --warning-muted-border: rgba(180, 83, 9, 0.25);     /* LIGHT.warningMutedBorder */
+    --warning:              #B45309;                  /* LIGHT.warning */
+    --warning-muted:        rgba(180, 83, 9, 0.10);   /* LIGHT.warningMuted */
+    --warning-muted-border: rgba(180, 83, 9, 0.25);   /* LIGHT.warningMutedBorder */
 
-    --info:              #0369A1;                    /* LIGHT.info */
-    --info-muted:        rgba(3, 105, 161, 0.10);    /* LIGHT.infoMuted */
-    --info-muted-border: rgba(3, 105, 161, 0.25);    /* LIGHT.infoMutedBorder */
+    --info:              #0369A1;                  /* LIGHT.info */
+    --info-muted:        rgba(3, 105, 161, 0.10);  /* LIGHT.infoMuted */
+    --info-muted-border: rgba(3, 105, 161, 0.25);  /* LIGHT.infoMutedBorder */
 
-    /* ── Gráficos ─────────────────────────────────────────────────────────── */
-    --chart-featured:  #0369A1;  /* LIGHT.chartFeatured */
-    --chart-ipca:      #475569;  /* LIGHT.chartIpca */
-    --chart-basket-1:  #7C3AED;  /* LIGHT.chartBasket1 */
-    --chart-basket-2:  #DB2777;  /* LIGHT.chartBasket2 */
-    --chart-basket-3:  #EA580C;  /* LIGHT.chartBasket3 */
-    --chart-volume-1:  #7C3AED;  /* LIGHT.chartVolume1 */
-    --chart-volume-2:  #DB2777;  /* LIGHT.chartVolume2 */
-    --chart-volume-3:  #EA580C;  /* LIGHT.chartVolume3 */
-    --chart-volume-4:  #0891B2;  /* LIGHT.chartVolume4 */
-    --chart-volume-5:  #C026D3;  /* LIGHT.chartVolume5 */
-    --chart-volume-6:  #3F6212;  /* LIGHT.chartVolume6 */
+    /* ── Gráficos — Séries ────────────────────────────────────────────────── */
+    --chart-featured: #0369A1;  /* LIGHT.chartFeatured */
+    --chart-ipca:     #475569;  /* LIGHT.chartIpca */
+
+    /* ── Gráficos — Cestas ────────────────────────────────────────────────── */
+    --chart-basket-1: #7C3AED;  /* LIGHT.chartBasket1 */
+    --chart-basket-2: #DB2777;  /* LIGHT.chartBasket2 */
+    --chart-basket-3: #EA580C;  /* LIGHT.chartBasket3 */
+
+    /* ── Gráficos — Volumes ───────────────────────────────────────────────── */
+    --chart-volume-1: #7C3AED;  /* LIGHT.chartVolume1 */
+    --chart-volume-2: #DB2777;  /* LIGHT.chartVolume2 */
+    --chart-volume-3: #EA580C;  /* LIGHT.chartVolume3 */
+    --chart-volume-4: #0891B2;  /* LIGHT.chartVolume4 */
+    --chart-volume-5: #C026D3;  /* LIGHT.chartVolume5 */
+    --chart-volume-6: #3F6212;  /* LIGHT.chartVolume6 */
 
     /* ── Botões — Primary ─────────────────────────────────────────────────── */
     --btn-primary-bg:            #0369A1;  /* = accent */
@@ -488,69 +646,139 @@
     --btn-ghost-text-disabled: #94A3B8;  /* slate-400 */
 
     /* ── Botões — Destructive ─────────────────────────────────────────────── */
-    --btn-destructive-border:          #DC2626;                    /* = destructive */
-    --btn-destructive-text:            #DC2626;                    /* = destructive */
-    --btn-destructive-bg-pressed:      rgba(220, 38, 38, 0.10);    /* = destructive-muted */
-    --btn-destructive-text-pressed:    #991B1B;                    /* red-800 — escurece ao press */
-    --btn-destructive-border-disabled: #E2E8F0;                    /* = border */
-    --btn-destructive-text-disabled:   #94A3B8;                    /* slate-400 */
+    --btn-destructive-border:          #DC2626;                   /* = destructive */
+    --btn-destructive-text:            #DC2626;                   /* = destructive */
+    --btn-destructive-bg-pressed:      rgba(220, 38, 38, 0.10);   /* = destructive-muted */
+    --btn-destructive-text-pressed:    #991B1B;                   /* red-800, escurece no press */
+    --btn-destructive-border-disabled: #E2E8F0;                   /* = border */
+    --btn-destructive-text-disabled:   #94A3B8;                   /* slate-400 */
 
     /* ── Card ─────────────────────────────────────────────────────────────── */
-    --card-bg:                #FFFFFF;                    /* = surface */
-    --card-border:            #E2E8F0;                    /* = border */
-    --card-highlight-border:  #BAE6FD;                    /* LIGHT.cardHighlightBorder */
-    --card-highlight-glow:    rgba(3, 105, 161, 0.30);    /* LIGHT.cardHighlightGlow */
-    --card-highlight-divider: rgba(3, 105, 161, 0.15);    /* LIGHT.cardHighlightDivider */
+    --card-bg:                #FFFFFF;                  /* = surface */
+    --card-border:            #E2E8F0;                  /* = border */
+    --card-highlight-border:  #BAE6FD;                  /* LIGHT.cardHighlightBorder */
+    --card-highlight-glow:    rgba(3, 105, 161, 0.30);  /* LIGHT.cardHighlightGlow */
+    --card-highlight-divider: rgba(3, 105, 161, 0.15);  /* LIGHT.cardHighlightDivider */
 
     /* ── Input ────────────────────────────────────────────────────────────── */
-    --input-bg:              #FFFFFF;                    /* = surface */
-    --input-border:          #E2E8F0;                    /* = border */
-    --input-focus-border:    #0369A1;                    /* = accent */
-    --input-focus-shadow:    rgba(3, 105, 161, 0.06);    /* = accent-ring */
-    --input-error-border:    #DC2626;                    /* = destructive */
-    --input-error-shadow:    rgba(220, 38, 38, 0.10);    /* = destructive-muted */
-    --input-disabled-bg:     #F8FAFC;                    /* = surface-hover */
-    --input-disabled-border: #F1F5F9;                    /* = border-subtle */
+    --input-bg:              #FFFFFF;                  /* = surface */
+    --input-border:          #E2E8F0;                  /* = border */
+    --input-focus-border:    #0369A1;                  /* = accent */
+    --input-focus-shadow:    rgba(3, 105, 161, 0.06);  /* = accent-ring */
+    --input-error-border:    #DC2626;                  /* = destructive */
+    --input-error-shadow:    rgba(220, 38, 38, 0.10);  /* = destructive-muted */
+    --input-disabled-bg:     #F8FAFC;                  /* = surface-hover */
+    --input-disabled-border: #F1F5F9;                  /* = border-subtle */
 
     /* ── Tab bar ──────────────────────────────────────────────────────────── */
-    --tab-bar-bg:        #FFFFFF;   /* = surface */
-    --tab-bar-border:    #F1F5F9;   /* = border-subtle */
-    --tab-active-color:  #0369A1;   /* = accent */
-    --tab-inactive-color: #94A3B8;  /* LIGHT.tabInactive */
+    --tab-bar-bg:         #FFFFFF;   /* = surface */
+    --tab-bar-border:     #F1F5F9;   /* = border-subtle */
+    --tab-active-color:   #0369A1;   /* = accent */
+    --tab-inactive-color: #94A3B8;   /* LIGHT.tabInactive */
 
-    /* ── Toggle / Segmented Control ─────────────────────────────────────────*/
-    --toggle-container-bg: #FFFFFF;  /* LIGHT.toggleContainer */
-    --toggle-active-bg:    #F1F5F9;  /* = background-deep */
-    --toggle-active-fg:    #0F172A;  /* = foreground */
-    --toggle-inactive-fg:  #64748B;  /* = foreground-muted */
+    /* ── Toggle / Segmented Control ─────────────────────────────────────── */
+    --toggle-container-bg: #FFFFFF;   /* LIGHT.toggleContainer */
+    --toggle-active-bg:    #F1F5F9;   /* = background-deep */
+    --toggle-active-fg:    #0F172A;   /* = foreground */
+    --toggle-inactive-fg:  #64748B;   /* = foreground-muted */
 
     /* ── Chip / Filter ────────────────────────────────────────────────────── */
-    --chip-bg:            #FFFFFF;                    /* = surface */
-    --chip-border:        #E2E8F0;                    /* = border */
-    --chip-text:          #475569;                    /* = foreground-secondary */
-    --chip-active-bg:     rgba(3, 105, 161, 0.10);    /* = accent-muted */
-    --chip-active-border: #0369A1;                    /* = accent */
-    --chip-active-text:   #0369A1;                    /* = accent */
+    --chip-bg:            #FFFFFF;                  /* = surface */
+    --chip-border:        #E2E8F0;                  /* = border */
+    --chip-text:          #475569;                  /* = foreground-secondary */
+    --chip-active-bg:     rgba(3, 105, 161, 0.10);  /* = accent-muted */
+    --chip-active-border: #0369A1;                  /* = accent */
+    --chip-active-text:   #0369A1;                  /* = accent */
 
-    /* ── Outros componentes ───────────────────────────────────────────────── */
-    --skeleton-bg:         #E2E8F0;                    /* = border — shimmer mais visível */
-    --skeleton-shine:      rgba(255, 255, 255, 0.70);  /* brilho pronunciado no light */
-    --badge-auto-bg:       #DBEAFE;                    /* LIGHT.badgeAutoBg */
-    --badge-auto-text:     #1E40AF;                    /* LIGHT.badgeAutoText */
+    /* ── Skeleton ─────────────────────────────────────────────────────────── */
+    --skeleton-bg:    #E2E8F0;                    /* = border — mais visível no light */
+    --skeleton-shine: rgba(255, 255, 255, 0.70);  /* brilho pronunciado */
+
+    /* ── Badge ────────────────────────────────────────────────────────────── */
+    --badge-auto-bg:   #DBEAFE;  /* LIGHT.badgeAutoBg */
+    --badge-auto-text: #1E40AF;  /* LIGHT.badgeAutoText */
+
+    /* ── Divisores / Frozen ───────────────────────────────────────────────── */
     --divider-frozen-bg:   #F1F5F9;                    /* LIGHT.dividerFrozenBg */
     --divider-frozen-text: #475569;                    /* LIGHT.dividerFrozenText */
     --frozen-indicator-bg: rgba(116, 132, 149, 0.15);  /* LIGHT.frozenIndicatorBg */
-    --sheet-handle:        #CBD5E1;                    /* LIGHT.sheetHandle */
-    --modal-backdrop:      rgba(0, 0, 0, 0.40);        /* = overlay */
+
+    /* ── Sheet / Modal ────────────────────────────────────────────────────── */
+    --sheet-handle:   #CBD5E1;                   /* LIGHT.sheetHandle */
+    --modal-backdrop: rgba(0, 0, 0, 0.40);       /* = overlay */
+
+    /* ── [Futuro] FAB Menu ────────────────────────────────────────────────── */
+    --fab-menu-bg:           #FFFFFF;   /* = surface */
+    --fab-menu-border:       #E2E8F0;   /* = border */
+    --fab-menu-item-bg:      #F8FAFC;   /* = surface-hover */
+    --fab-menu-item-pressed: #F1F5F9;   /* = background-deep */
+
+    /* ── [Futuro] Segmented Tabs ──────────────────────────────────────────── */
+    --segmented-tab-bg:            #F1F5F9;   /* = background-deep */
+    --segmented-tab-active-bg:     #FFFFFF;   /* = surface */
+    --segmented-tab-active-text:   #0F172A;   /* = foreground */
+    --segmented-tab-inactive-text: #64748B;   /* = foreground-muted */
+
+    /* ── [Futuro] Tag Removível ───────────────────────────────────────────── */
+    --tag-bg:          rgba(3, 105, 161, 0.10);  /* = accent-muted */
+    --tag-text:        #0369A1;                  /* = accent */
+    --tag-remove-icon: #475569;                  /* = foreground-secondary */
+
+    /* ── [Futuro] Date Picker ─────────────────────────────────────────────── */
+    --datepicker-bg:            #FFFFFF;                  /* = surface */
+    --datepicker-border:        #E2E8F0;                  /* = border */
+    --datepicker-selected-bg:   #0369A1;                  /* = accent */
+    --datepicker-selected-text: #FFFFFF;                  /* = accent-foreground */
+    --datepicker-today-border:  rgba(3, 105, 161, 0.50);  /* accent com opacidade */
+
+    /* ── [Futuro] Slider ──────────────────────────────────────────────────── */
+    --slider-track-bg:     #E2E8F0;   /* = border */
+    --slider-track-fill:   #0369A1;   /* = accent */
+    --slider-thumb-bg:     #FFFFFF;   /* = surface */
+    --slider-thumb-border: #0369A1;   /* = accent */
+
+    /* ── [Futuro] Switch ──────────────────────────────────────────────────── */
+    --switch-track-off: #E2E8F0;   /* = border */
+    --switch-track-on:  #0369A1;   /* = accent */
+    --switch-thumb:     #FFFFFF;   /* = surface */
+
+    /* ── [Futuro] Radio ───────────────────────────────────────────────────── */
+    --radio-border:      #E2E8F0;   /* = border */
+    --radio-selected-bg: #0369A1;   /* = accent */
+    --radio-selected-dot: #FFFFFF;  /* = accent-foreground */
+
+    /* ── [Futuro] Content Tabs ────────────────────────────────────────────── */
+    --content-tab-border:         #E2E8F0;   /* = border */
+    --content-tab-active-border:  #0369A1;   /* = accent */
+    --content-tab-active-text:    #0F172A;   /* = foreground */
+    --content-tab-inactive-text:  #64748B;   /* = foreground-muted */
+
+    /* ── [Futuro] Snackbar ────────────────────────────────────────────────── */
+    --snackbar-bg:     #0F172A;   /* fundo escuro mesmo no light — contraste garantido */
+    --snackbar-text:   #F1F5F9;   /* = dark foreground */
+    --snackbar-action: #38BDF8;   /* = dark accent */
+
+    /* ── [Futuro] Progress Bar ────────────────────────────────────────────── */
+    --progress-track-bg: #E2E8F0;   /* = border */
+    --progress-fill:     #0369A1;   /* = accent */
+
+    /* ── [Futuro] Avatar ──────────────────────────────────────────────────── */
+    --avatar-bg:     #F1F5F9;                  /* = background-deep */
+    --avatar-text:   #475569;                  /* = foreground-secondary */
+    --avatar-border: rgba(3, 105, 161, 0.20);  /* = accent-glow */
+
+    /* ── [Futuro] Swipe Actions ───────────────────────────────────────────── */
+    --swipe-destructive-bg: rgba(220, 38, 38, 0.15);   /* destructive com opacidade */
+    --swipe-action-bg:      rgba(3, 105, 161, 0.10);   /* = accent-muted */
 
   }
 } /* fim @media light */
 
 
 /* ── 5. Utility classes compostas ─────────────────────────────────────────────
-   Composição de múltiplos tokens em uma classe semântica.
+   Composição de múltiplos tokens em uma classe semântica única.
    Usam var(--nome-canonico) do :root — reagem ao tema automaticamente.
-   Compatíveis com NativeWind (evitar pseudo-seletores não suportados por RN).
+   Compatíveis com NativeWind: sem pseudo-seletores não suportados por RN.
    ----------------------------------------------------------------------------- */
 
 /* ── Botão Primary — CTA de alta ênfase ──────────────────────────────────── */
@@ -562,12 +790,12 @@
   padding-right: var(--spacing-4);
   padding-top: var(--spacing-3);
   padding-bottom: var(--spacing-3);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--text-body);
   font-family: var(--font-heading);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
 }
 
-/* ── Botão Secondary — outline, ação de ênfase média ─────────────────────── */
+/* ── Botão Secondary — outline, ênfase média ─────────────────────────────── */
 .btn-secondary {
   background-color: transparent;
   color: var(--btn-secondary-text);
@@ -578,12 +806,12 @@
   padding-right: var(--spacing-4);
   padding-top: var(--spacing-3);
   padding-bottom: var(--spacing-3);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--text-body);
   font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
 }
 
-/* ── Botão Ghost — sem fundo, ação de baixa ênfase ───────────────────────── */
+/* ── Botão Ghost — sem fundo, ênfase baixa ───────────────────────────────── */
 .btn-ghost {
   background-color: transparent;
   color: var(--btn-ghost-text);
@@ -592,9 +820,9 @@
   padding-right: var(--spacing-4);
   padding-top: var(--spacing-3);
   padding-bottom: var(--spacing-3);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--text-body);
   font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
 }
 
 /* ── Botão Destructive — ação perigosa, outline vermelho ─────────────────── */
@@ -608,12 +836,12 @@
   padding-right: var(--spacing-4);
   padding-top: var(--spacing-3);
   padding-bottom: var(--spacing-3);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--text-body);
   font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
 }
 
-/* ── Card padrão — lista de produtos, seções de conteúdo ─────────────────── */
+/* ── Card padrão — item de lista, seção de conteúdo ─────────────────────── */
 .card-default {
   background-color: var(--card-bg);
   border-color: var(--card-border);
@@ -623,8 +851,7 @@
 }
 
 /* ── Card hero — cesta em destaque, summary principal ────────────────────── */
-/* Nota: background com gradiente deve ser definido inline no componente RN,
-   usando DARK.cardHighlightBg ou LIGHT.cardHighlightBg do design-tokens.ts */
+/* Fundo com gradiente: usar DARK/LIGHT.cardHighlightBg via style inline no RN */
 .card-hero {
   border-color: var(--card-highlight-border);
   border-width: 1px;
@@ -643,9 +870,9 @@
   padding-top: var(--spacing-2);
   padding-bottom: var(--spacing-2);
   color: var(--chip-text);
+  font-family: var(--font-body);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-medium);
-  font-family: var(--font-body);
 }
 
 /* ── Chip ativo — filtro de categoria selecionado ────────────────────────── */
@@ -659,13 +886,13 @@
   padding-top: var(--spacing-2);
   padding-bottom: var(--spacing-2);
   color: var(--chip-active-text);
+  font-family: var(--font-body);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-semibold);
-  font-family: var(--font-body);
 }
 
-/* ── Skeleton — base do shimmer ──────────────────────────────────────────── */
-/* Animação implementada via Animated.Value no componente RN */
+/* ── Skeleton — base do shimmer loading ──────────────────────────────────── */
+/* Animação de shimmer: implementar via Animated.Value no componente RN */
 .skeleton {
   background-color: var(--skeleton-bg);
   border-radius: var(--radius-sm);
@@ -673,43 +900,39 @@
 
 /* ══════════════════════════════════════════════════════════════════════════════
    SEMÂNTICA DE VARIAÇÃO DE INFLAÇÃO
-   REGRA: vermelho (destructive) = inflação positiva (preço subiu = ruim)
-          verde (success)        = inflação negativa (preço caiu = bom)
-   Esta inversão é INTENCIONAL. Não alterar sem revisão do product design.
+   REGRA CRITICA: vermelho (destructive) = pct > 0 (subiu = ruim para consumidor)
+                  verde (success)        = pct < 0 (caiu = bom para consumidor)
+                  muted                  = pct = 0 (neutro)
+   Implementação de referência em design-tokens.ts → variationColor()
    ══════════════════════════════════════════════════════════════════════════════ */
 
-/* Inflação positiva — preço subiu, exige atenção do usuário */
 .text-inflation-positive {
   color: var(--destructive);
 }
 
-/* Inflação negativa — preço caiu, sinal positivo para o usuário */
 .text-inflation-negative {
   color: var(--success);
 }
 
-/* Inflação neutra / zero / sem variação disponível */
 .text-inflation-neutral {
   color: var(--foreground-muted);
 }
 
-/* ── Linha de referência IPCA ────────────────────────────────────────────── */
-/* Aplicada em rótulos, tooltips e anotações que referenciam o IPCA */
+/* ── Referência IPCA — linha de comparação neutra em gráficos ────────────── */
 .text-ipca-reference {
   color: var(--foreground-secondary);
 }
 
-/* ── Disclaimer / Nota legal ─────────────────────────────────────────────── */
-/* Rodapés, avisos de coleta de dados, fontes de informação */
+/* ── Disclaimer — rodapé, fontes, notas legais ───────────────────────────── */
 .disclaimer {
   color: var(--foreground-muted);
+  font-family: var(--font-body);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-regular);
-  font-family: var(--font-body);
+  text-align: center;
 }
 
-/* ── Tooltip ──────────────────────────────────────────────────────────────── */
-/* Balão contextual, ex: explicação do cálculo de inflação */
+/* ── Tooltip — explicação contextual ─────────────────────────────────────── */
 .tooltip {
   background-color: var(--surface-2);
   border-color: var(--border);
@@ -717,12 +940,11 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-3);
   color: var(--foreground-secondary);
-  font-size: var(--text-caption);
   font-family: var(--font-body);
+  font-size: var(--text-caption);
 }
 
-/* ── Badge de projeção ───────────────────────────────────────────────────── */
-/* Badge numérico em cards de projeção futura de gasto */
+/* ── Badge de projeção — número futuro em cards de gasto ─────────────────── */
 .badge-projection {
   background-color: var(--accent-muted);
   border-color: var(--accent-ring);
@@ -733,13 +955,12 @@
   padding-top: 2px;
   padding-bottom: 2px;
   color: var(--accent);
+  font-family: var(--font-body);
   font-size: var(--text-label);
   font-weight: var(--font-weight-semibold);
-  font-family: var(--font-body);
 }
 
-/* ── Alerta de variação de preço ─────────────────────────────────────────── */
-/* Banner quando um produto tem variação significativa no período */
+/* ── Alert de variação de preço — banner de atenção ─────────────────────── */
 .alert-price {
   background-color: var(--destructive-muted);
   border-color: var(--destructive-muted-border);
@@ -747,13 +968,12 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-3);
   color: var(--destructive);
+  font-family: var(--font-body);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-medium);
-  font-family: var(--font-body);
 }
 
-/* ── Empty state ─────────────────────────────────────────────────────────── */
-/* Container de estado vazio: nenhum produto, sem dados, cesta vazia */
+/* ── Empty state — container de estado vazio ─────────────────────────────── */
 .empty-state {
   align-items: center;
   justify-content: center;
@@ -761,75 +981,11 @@
   gap: var(--spacing-3);
 }
 
-/* Texto do estado vazio */
+/* ── Empty state — texto de suporte ─────────────────────────────────────── */
 .empty-state-text {
   color: var(--foreground-muted);
+  font-family: var(--font-body);
   font-size: var(--text-body);
   font-weight: var(--font-weight-regular);
-  font-family: var(--font-body);
   text-align: center;
 }
-
-/*
-  ══════════════════════════════════════════════════════════════════════════════
-  REFERÊNCIA DE ALIASES — uso em className nos componentes RN
-  ══════════════════════════════════════════════════════════════════════════════
-
-  BASE
-    bg-background             → fundo da tela principal
-    bg-background-deep        → modais, bottom sheets
-    bg-surface                → cards, painéis elevados
-    bg-surface-hover          → pressed/active de items de lista
-    bg-surface-2              → rows alternadas, separadores internos
-    bg-surface-3              → nested cards
-    border-border             → divisores e bordas visíveis
-    border-border-subtle      → bordas quase invisíveis
-    border-border-dashed      → bordas tracejadas
-
-  TEXTO
-    text-foreground           → corpo de texto principal
-    text-foreground-secondary → labels, subtítulos, data
-    text-foreground-muted     → placeholders, metadados, eixos de gráfico
-    text-foreground-card-meta → metadados coloridos em cards hero
-
-  ACCENT
-    bg-accent                 → botão primário, ícones ativos
-    text-accent               → links, rótulos de destaque
-    text-accent-foreground    → texto branco sobre fundo accent
-    bg-accent-muted           → fundo de badges accent
-    border-accent-ring        → anel de foco
-
-  SEMÂNTICA DE INFLAÇÃO (regra de negócio — não inverter!)
-    text-inflation-positive   → inflação subiu (vermelho)
-    text-inflation-negative   → inflação caiu (verde)
-    text-inflation-neutral    → sem variação (muted)
-    text-destructive          → erros, alertas críticos
-    bg-destructive-muted      → fundo de badge de erro
-    text-success              → confirmações, variações positivas para o usuário
-    text-warning              → atenção, dados parciais
-    text-ipca-reference       → linha IPCA nos gráficos e comparações
-
-  GRÁFICOS
-    text-chart-featured       → linha da cesta em destaque
-    text-chart-ipca           → linha IPCA de referência
-    text-chart-basket-1/2/3   → séries das 3 cestas comparadas
-    text-chart-volume-1..6    → barras de volume por categoria
-
-  COMPONENTES
-    bg-tab-bar-bg             → fundo da tab bar
-    text-tab-active-color     → aba ativa
-    text-tab-inactive-color   → aba inativa
-    bg-toggle-container-bg    → controle segmentado
-    bg-card-bg                → card padrão
-    border-card-border        → borda de card padrão
-    border-card-highlight-border → borda do card hero
-    bg-input-bg               → fundo de input
-    border-input-border       → borda padrão de input
-    border-input-focus-border → borda de input com foco (accent)
-    border-input-error-border → borda de input com erro (destructive)
-    bg-skeleton-bg            → shimmer de loading
-    bg-badge-auto-bg          → badge "automático"
-    text-badge-auto-text      → texto do badge automático
-    text-sheet-handle         → alça do bottom sheet (na prática: bg-)
-  ══════════════════════════════════════════════════════════════════════════════
-*/
